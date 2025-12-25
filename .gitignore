@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+# Xcode
+*.xcuserstate
+*.xcuserdata
+*.xcshareddata
+*.xcuserstate
+*.xcuserdata
+*.xcshareddata
+*.xcuserstate
+*.xcuserdata
+*.xcshareddata
+
+# Swift
+.build
+.swiftpm
