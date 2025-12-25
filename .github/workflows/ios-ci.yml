@@ -1,0 +1,57 @@
+name: ItemApp iOS CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+jobs:
+  ui-tests:
+    name: Run UI Tests on macOS 26 (ARM64)
+    runs-on: macos-26 # Latest runner - ARM64 only
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Select Xcode 26.2 (latest)
+      run: |
+        sudo xcode-select -s /Applications/Xcode_26.2.app/Contents/Developer
+        xcodebuild -version
+    
+    - name: Show build environment
+      run: |
+        echo "=== Xcode Version ==="
+        xcodebuild -version
+        echo ""
+        echo "=== macOS Version ==="
+        sw_vers
+        echo ""
+        echo "=== Available iOS Simulators ==="
+        xcrun simctl list devices available | grep "iPhone 17"
+    
+    - name: Build and run ItemAppUITests
+      run: |
+        set -o pipefail
+        xcodebuild test \
+          -project ItemApp.xcodeproj \
+          -scheme ItemApp \
+          -testPlan ItemApp \
+          -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.1' \
+          -only-testing:ItemAppUITests \
+          -parallel-testing-enabled NO \
+          -maximum-parallel-testing-workers 1 \
+          -enableCodeCoverage YES \
+          -resultBundlePath TestResults \
+          | xcpretty --color --simple
+      timeout-minutes: 30
+    
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results-${{ github.run_number }}
+        path: TestResults.xcresult
+        retention-days: 30
