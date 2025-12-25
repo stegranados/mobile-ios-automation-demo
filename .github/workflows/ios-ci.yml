@@ -44,8 +44,7 @@ jobs:
           -parallel-testing-enabled NO \
           -maximum-parallel-testing-workers 1 \
           -enableCodeCoverage YES \
-          -resultBundlePath TestResults \
-          | xcpretty --color --simple
+          -resultBundlePath TestResults
       timeout-minutes: 30
     
     - name: Upload test results

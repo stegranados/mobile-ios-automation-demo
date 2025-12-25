@@ -14,3 +14,8 @@
 # Swift
 .build
 .swiftpm
+
+# Test results
+TestResults.xcresult
+TestResults.xcresult.zip
+TestResults
