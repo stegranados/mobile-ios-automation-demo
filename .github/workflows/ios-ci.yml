@@ -54,7 +54,7 @@ jobs:
       if: always()
       run: |
         allure --version
-        allure generate TestResults.xcresult -o allure-report --clean
+        allure allure2 --report-name allure-report TestResults.xcresult
         tar -czf allure-report.tar.gz allure-report
     
     - name: Upload test results
