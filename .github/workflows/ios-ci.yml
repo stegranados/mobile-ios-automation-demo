@@ -47,8 +47,10 @@ jobs:
           -resultBundlePath TestResults.xcresult
       timeout-minutes: 30
 
-    - name: Install Allure CLI
-      run: npm install -g allure-commandline@latest
+    - name: Install Allure CLI (Allure 3 via Node.js)
+      run: |
+        npm install -g allure@latest
+        allure --version
     
     - name: Generate Allure report
       if: always()

@@ -5,7 +5,7 @@ This project is wired so macOS runners can execute XCTest UI tests and emit an A
 ## Prerequisites on the macOS runner
 - Xcode 26.2 selected (`sudo xcode-select -s /Applications/Xcode_26.2.app/Contents/Developer`).
 - iOS 17 simulator available (workflow uses `iPhone 17` on `OS=26.1`).
-- Node.js/npm available to install the Allure CLI: `npm install -g allure-commandline@latest`.
+- Node.js/npm available to install the Allure CLI (Allure 3): `npm install -g allure`.
 - In the ItemApp test plan/scheme, enable `Record Screen` and `Capture Screenshots` so videos/images are stored in `TestResults.xcresult` for Allure to render.
 
 ## Run the UI tests (same as CI)
