@@ -19,3 +19,11 @@
 TestResults.xcresult
 TestResults.xcresult.zip
 TestResults
+
+# Allure reports
+allure-report
+allure-results
+
+
+# vscode
+.vscode

@@ -44,8 +44,20 @@ jobs:
           -parallel-testing-enabled NO \
           -maximum-parallel-testing-workers 1 \
           -enableCodeCoverage YES \
-          -resultBundlePath TestResults
+          -resultBundlePath TestResults.xcresult
       timeout-minutes: 30
+
+    - name: Install Allure CLI (Allure 3 via Node.js)
+      run: |
+        npm install -g allure@latest
+        allure --version
+    
+    - name: Generate Allure report
+      if: always()
+      run: |
+        allure --version
+        allure allure2 --report-name allure-report TestResults.xcresult
+        tar -czf allure-report.tar.gz allure-report
     
     - name: Upload test results
       if: always()
@@ -53,4 +65,14 @@ jobs:
       with:
         name: test-results-${{ github.run_number }}
         path: TestResults.xcresult
+        retention-days: 30
+
+    - name: Upload Allure report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: allure-report-${{ github.run_number }}
+        path: |
+          allure-report.tar.gz
+          TestResults.xcresult
         retention-days: 30
